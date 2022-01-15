@@ -2,6 +2,7 @@ import pygame
 import pygame_gui
 import inputimie as ii
 import mechanizmrozgrywki as mr
+import licznikzwierzat as lz
 
 class tryby_gry():
     def __init__(self):
@@ -58,6 +59,7 @@ class tryby_gry():
     def rozpocznij_runde(self, Rozpocznij_Gre):
         self.Etap_Runda = True
         pygame_gui.elements.UIButton.hide(Rozpocznij_Gre)
+        pygame.display.update()
 
     def wyswietlane_teksty(self, gameDisplay, Liczba_Graczy, Super_Farmer, TEXT_COLOR):
         if self.Etap_Rozgrywka == True:
@@ -65,25 +67,35 @@ class tryby_gry():
         if self.Etap_Poczatek == True:
             gameDisplay.blit(Super_Farmer, (325, 200))
         if self.Etap_Runda == True:
-            pygame.draw.rect(gameDisplay, TEXT_COLOR, (20, 45, 150, 350))
-            pygame.draw.rect(gameDisplay, TEXT_COLOR, (20, 430, 760, 150))
-            gameDisplay.blit(rabbit, (30, 50))
-            gameDisplay.blit(sheep, (30, 100))
-            gameDisplay.blit(pig, (30, 150))
-            gameDisplay.blit(cow, (30, 200))
-            gameDisplay.blit(horse, (30, 250))
-            gameDisplay.blit(small_dog, (30, 300))
-            gameDisplay.blit(big_dog, (30, 350))
+            print("A")
+            
 
-    def rundy_gry(self, gracz1, gracz2, gracz3, gracz4, gracz5):
-        gracz1.rzut_koscmi()
-        # Najpierw rzut kości jednej osoby
-        # Potem czy chce coś z tymi zwierzetami zrobić
-        # Spawdzenie, czy ta osoba wygrywa
-        # Potem rzut kości kolejnej osoby
-        # I czy ona chce coś zrobić
-        # I czy ta osoba wygrywa
-        print("A")
+    def rundy_gry(self, clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5, gameDisplay, myfont, Wymiana, Koniec_Rundy):
+        while True:
+            time_delta = clock.tick(60)/1000.0
+            mouse = pygame.mouse.get_pos()
+            for event in pygame.event.get():
+                if event.type==pygame.KEYDOWN:
+                    if event.key==pygame.K_ESCAPE:
+                        exit()
+                if event.type == pygame.USEREVENT:
+                    if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                        print("A")
+                manager.process_events(event)
+            manager.update(time_delta)
+            gameDisplay.blit(background, (0, 0))
+            lz.interfejs(gameDisplay, TEXT_COLOR)
+            gracz1.rzut_koscmi(gameDisplay, myfont)
+            gracz1.akcjeporzucie(gameDisplay, myfont, manager, time_delta, Wymiana, Koniec_Rundy)
+            input()
+            # Najpierw rzut kości jednej osoby
+            # Potem czy chce coś z tymi zwierzetami zrobić
+            # Spawdzenie, czy ta osoba wygrywa
+            # Potem rzut kości kolejnej osoby
+            # I czy ona chce coś zrobić
+            # I czy ta osoba wygrywa
+            print("A")
+            manager.update(time_delta)
 
 rabbit = pygame.image.load("pic-rabbit.png")
 rabbit = pygame.transform.scale(rabbit, (35, 35))
