@@ -5,13 +5,14 @@ import pygame
 import pygame_gui
 import inputimie as ii
 import funkcjedokodu as fdk
+import licznikzwierzat as lz
 
 class mechanizm_rogzrywki():
     def __init__(self, gameDisplay):
         print("Gracz")
         self.zwierzetagracza = []
 
-    def rzut_koscmi(self):
+    def rzut_koscmi(self, gameDisplay, myfont):
         KoscJeden = ["Królik", "Owca", "Królik", "Owca", "Królik", "Świnia", "Królik", "Świnia", "Królik", "Koń", "Królik", "Lis"]
         KoscDwa = ["Królik", "Owca", "Królik", "Owca", "Królik", "Owca", "Królik", "Świnia", "Królik", "Krowa", "Królik", "Wilk"]
         WynikJeden = random.choice(KoscJeden)
@@ -28,6 +29,8 @@ class mechanizm_rogzrywki():
         przedzwierzatkaswinie = self.zwierzetagracza.count("Świnia")
         przedzwierzatkakrowy = self.zwierzetagracza.count("Krowa")
         przedzwierzatkakonie = self.zwierzetagracza.count("Koń")
+        # przedzwierzatkamalepsy = self.zwierzetagracza.count("Mały Pies")
+        # przedzwierzatkaduzepsy = self.zwierzetagracza.count("Duży Pies")
 
 
         if WynikJeden == WynikDwa:
@@ -209,7 +212,7 @@ class mechanizm_rogzrywki():
             else: 
                 print("Atak lisa! \nNa szczęście mały pies obronił króliki. Tracisz jednego małego psa")
                 self.zwierzetagracza.remove("Mały Pies")
-        elif WynikDwa == "Wilk": #Zabiera wszystkie zwierzęta oprcz królików
+        if WynikDwa == "Wilk": #Zabiera wszystkie zwierzęta oprcz królików
             if "Duży Pies" not in self.zwierzetagracza:
                 print("O nie! Tracisz wszystkie zwierzęta oprócz królików!")
                 while "Owca" in self.zwierzetagracza:
@@ -231,9 +234,10 @@ class mechanizm_rogzrywki():
         self.pozwierzatkaswinie = self.zwierzetagracza.count("Świnia")
         self.pozwierzatkakrowy = self.zwierzetagracza.count("Krowa")
         self.pozwierzatkakonie = self.zwierzetagracza.count("Koń")
-        pozwierzatkampsy = self.zwierzetagracza.count("Mały Pies")
-        pozwierzatkadpsy = self.zwierzetagracza.count("Duży Pies")
-        print("Zwierzęta gracza :", "Króliki:", self.pozwierzatkakroliki, "Owce:", self.pozwierzatkaowce, "Świnie:", self.pozwierzatkaswinie, "Krowy:", self.pozwierzatkakrowy, "Konie:", self.pozwierzatkakonie, "Małe Psy:", pozwierzatkampsy, "Duże Psy:", pozwierzatkadpsy)
+        self.pozwierzatkampsy = self.zwierzetagracza.count("Mały Pies")
+        self.pozwierzatkadpsy = self.zwierzetagracza.count("Duży Pies")
+        lz.zwierzeta(gameDisplay, myfont, self.pozwierzatkakroliki, self.pozwierzatkaowce, self.pozwierzatkaswinie, self.pozwierzatkakrowy, self.pozwierzatkakonie, self.pozwierzatkampsy, self.pozwierzatkadpsy)
+        print("Zwierzęta gracza :", "Króliki:", self.pozwierzatkakroliki, "Owce:", self.pozwierzatkaowce, "Świnie:", self.pozwierzatkaswinie, "Krowy:", self.pozwierzatkakrowy, "Konie:", self.pozwierzatkakonie, "Małe Psy:", self.pozwierzatkampsy, "Duże Psy:", self.pozwierzatkadpsy)
         print("KONIEC RZUTU GRACZA")
         # Kości, którymi gracz będzie rzucać
         # Wynik pierwszy i wynik drugi
@@ -253,3 +257,137 @@ class mechanizm_rogzrywki():
         # Usunąć dodane kości z inwentarza
         # Runda kończy się ostatecznym podliczeniem zwierząt i aktualizacją tabelki z liczbą zwierząt
         print("AAA")
+
+    def akcjeporzucie(self, gameDisplay, myfont, manager, time_delta, Wymiana, Koniec_Rundy):
+        while True:
+            self.wymzwierzatkakroliki = self.zwierzetagracza.count("Królik")
+            self.wymzwierzatkaowce = self.zwierzetagracza.count("Owca")
+            self.wymzwierzatkaswinie = self.zwierzetagracza.count("Świnia")
+            self.wymzwierzatkakrowy = self.zwierzetagracza.count("Krowa")
+            self.wymzwierzatkakonie = self.zwierzetagracza.count("Koń")
+            self.wymzwierzatkampsy = self.zwierzetagracza.count("Mały Pies")
+            self.wymzwierzatkadpsy = self.zwierzetagracza.count("Duży Pies")
+            gameDisplay.blit((myfont.render("Czy chcesz zrobić coś jeszcze?", 1, (0,0,0))), (40, 450))
+            pygame_gui.elements.UIButton.show(Wymiana)
+            pygame_gui.elements.UIButton.show(Koniec_Rundy)
+            # wyborgracza = input()
+            for event in pygame.event.get():
+                if event.type == pygame.USEREVENT:
+                    if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                        if event.ui_element == Wymiana:
+                            wymianyopcjejeden = input("Możliwe wymiany: 1 - Kupno cenniejszych zwierząt hodowlanych, 2 - Kupno małego lub dużego psa, 3 - Wymiana zwierząt na mniej cenne")
+                            if wymianyopcjejeden == "1":
+                                cennezwierzatka = input("Jakie zwierzę chcesz zakupić? 1 - Owca, 2 - Świnia, 3 - Krowa, 4 - Koń")
+                                if cennezwierzatka == "1":
+                                    if self.wymzwierzatkakroliki > 5: 
+                                        self.zwierzetagracza.remove("Królik")
+                                        self.zwierzetagracza.remove("Królik")
+                                        self.zwierzetagracza.remove("Królik")
+                                        self.zwierzetagracza.remove("Królik")
+                                        self.zwierzetagracza.remove("Królik")
+                                        self.zwierzetagracza.remove("Królik")
+                                        self.zwierzetagracza.append("Owca")
+                                        print("Brawo, owca została zakupiona! Tracisz 6 królików")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada królików.")
+                                elif cennezwierzatka == "2":
+                                    if self.wymzwierzatkaowce > 2:
+                                        self.zwierzetagracza.remove("Owca")
+                                        self.zwierzetagracza.remove("Owca")
+                                        self.zwierzetagracza.remove("Owca")
+                                        self.zwierzetagracza.append("Świnia")
+                                        print("Brawo, świnia została zakupiona! Tracisz 3 owce")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada owiec.")
+                                elif cennezwierzatka == "3":
+                                    if self.wymzwierzatkaswinie > 1:
+                                        self.zwierzetagracza.remove("Świnia")
+                                        self.zwierzetagracza.remove("Świnia")
+                                        self.zwierzetagracza.append("Krowa")
+                                        print("Brawo, krowa została zakupiona! Tracisz 2 świnie")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada świni.")
+                                elif cennezwierzatka == "4":
+                                    if self.wymzwierzatkakrowy > 1:
+                                        self.zwierzetagracza.remove("Krowa")
+                                        self.zwierzetagracza.remove("Krowa")
+                                        self.zwierzetagracza.append("Koń")
+                                        print("Brawo, koń został zakupiony! Tracisz dwie krowy")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada krów.")
+
+                            elif wymianyopcjejeden == "2":
+                                piesczypies = input("1 - Mały Pies, 2 - Duży Pies")
+                                if piesczypies == "1":
+                                    if "Owca" in self.zwierzetagracza:
+                                        self.zwierzetagracza.append("Mały Pies")
+                                        self.zwierzetagracza.remove("Owca")
+                                        print("Brawo! Zakupiony został mały pies. Tracisz jedną owcę.")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada owiec.")
+                                if piesczypies == "2":
+                                    if "Krowa" in self.zwierzetagracza:
+                                        self.zwierzetagracza.append("Duży Pies")
+                                        self.zwierzetagracza.remove("Krowa")
+                                        print("Brawo! Zakupiony został duży pies. Tracisz jedną krowę.")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada krów.")
+                            elif wymianyopcjejeden == "3":
+                                namniejcenne = input("Jakie zwierzęta chcesz zakupić? 1 - króliki, 2 - Owce, 3 - Świnie, 4 - Krowy")
+                                if namniejcenne == "1":
+                                    if "Owca" in self.zwierzetagracza:
+                                        self.zwierzetagracza.remove("Owca")
+                                        self.zwierzetagracza.append("Królik")
+                                        self.zwierzetagracza.append("Królik")
+                                        self.zwierzetagracza.append("Królik")
+                                        self.zwierzetagracza.append("Królik")
+                                        self.zwierzetagracza.append("Królik")
+                                        self.zwierzetagracza.append("Królik")
+                                        print("Akcja wykonana pomyślnie! Utracono jedną owcę, zyskano sześć królików")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada owcy.")
+                                elif namniejcenne == "2":
+                                    if "Świnia" in self.zwierzetagracza:
+                                        self.zwierzetagracza.remove("Świnia")
+                                        self.zwierzetagracza.append("Owca")
+                                        self.zwierzetagracza.append("Owca")
+                                        self.zwierzetagracza.append("Owca")
+                                        print("Akcja wykonana pomyślnie! Utracono jedną świnię, zyskano trzy owce")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada świni.")
+
+                                elif namniejcenne == "3":
+                                    if "Krowa" in self.zwierzetagracza:
+                                        self.zwierzetagracza.remove("Krowa")
+                                        self.zwierzetagracza.append("Świnia")
+                                        self.zwierzetagracza.append("Świnia")
+                                        print("Akcja wykonana pomyślnie! Utracono jedną krowę, uzyskano dwie świnie")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada krowy.")
+                                elif namniejcenne == "4":
+                                    if "Koń" in self.zwierzetagracza:
+                                        self.zwierzetagracza.remove("Koń")
+                                        self.zwierzetagracza.append("Krowa")
+                                        self.zwierzetagracza.append("Krowa")
+                                        print("Akcja wykonana pomyślnie! Utracono jednego konia, uzyskano dwie krowy")
+                                    else:
+                                        print("Akcja jest niemożliwa do wykonania. Gracz nie posiada konia.")
+                                        
+
+                    elif event.ui_element == Koniec_Rundy:
+                        print("KONIEC RUNDY GRACZA")
+                        print("--------------------")
+                        break
+                    self.powymzwierzatkakroliki = self.zwierzetagracza.count("Królik")
+                    self.powymzwierzatkaowce = self.zwierzetagracza.count("Owca")
+                    self.powymzwierzatkaswinie = self.zwierzetagracza.count("Świnia")
+                    self.powymzwierzatkakrowy = self.zwierzetagracza.count("Krowa")
+                    self.powymzwierzatkakonie = self.zwierzetagracza.count("Koń")
+                    self.powymzwierzatkampsy = self.zwierzetagracza.count("Mały Pies")
+                    self.powymzwierzatkadpsy = self.zwierzetagracza.count("Duży Pies")
+                    
+                    print("Zwierzęta gracza:", "Króliki:", self.powymzwierzatkakroliki, "Owce:", self.powymzwierzatkaowce, "Świnie:", self.powymzwierzatkaswinie, "Krowy:", self.powymzwierzatkakrowy, "Konie:", self.powymzwierzatkakonie, "Małe Psy:", self.powymzwierzatkampsy, "Duże Psy:", self.powymzwierzatkadpsy)
+            manager.update(time_delta)
+            pygame.display.update()
+            pygame.display.flip()
+            manager.draw_ui(gameDisplay)
