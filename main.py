@@ -60,6 +60,10 @@ Imiona_Graczy = []
 # Etap 4 - Rozpoczęcie Rozgrywki
 Rozpocznij_Gre = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(250, 250, 300, 100), text="Rozpocznij Grę!", manager=manager)
 pygame_gui.elements.UIButton.hide(Rozpocznij_Gre)
+Wymiana = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(525, 500, 120, 33), text="Wymiana", manager=manager)
+pygame_gui.elements.UIButton.hide(Wymiana)
+Koniec_Rundy = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(650, 500, 120, 33), text="Koniec Rundy", manager=manager)
+pygame_gui.elements.UIButton.hide(Koniec_Rundy)
 
 gracz1 = mr.mechanizm_rogzrywki(gameDisplay)
 gracz2 = mr.mechanizm_rogzrywki(gameDisplay)
@@ -69,8 +73,6 @@ gracz5 = mr.mechanizm_rogzrywki(gameDisplay)
 
 
 while True:
-    gameDisplay.blit(background, (0, 0)) # Tworzy zdefiniowane wyżej tło, umieszcza je w prawym górnym rogu
-    manager.draw_ui(gameDisplay)
     time_delta = clock.tick(60)/1000.0
     mouse = pygame.mouse.get_pos()
     for event in pygame.event.get():
@@ -105,10 +107,12 @@ while True:
     manager.update(time_delta) # Tak często UIManager aktualizuje program
 
     # gameDisplay.fill(GREEN_BACKGROUND)
+    gameDisplay.blit(background, (0, 0)) # Tworzy zdefiniowane wyżej tło, umieszcza je w prawym górnym rogu
     t_g.wyswietlane_teksty(gameDisplay, Liczba_Graczy, Super_Farmer, TEXT_COLOR)
     if Etap_Runda == True:
-        t_g.rundy_gry(gracz1, gracz2, gracz3, gracz4, gracz5)
+        t_g.rundy_gry(clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5,gameDisplay, myfont, Wymiana, Koniec_Rundy)
         print("SS")
+    manager.draw_ui(gameDisplay)
 
     pygame.display.update()
     clock.tick(10)
