@@ -16,11 +16,12 @@ def zwierzeta(gameDisplay, myfont, przedzwierzatkakroliki, przedzwierzatkaowce, 
     gameDisplay.blit((myfont.render(str(przedzwierzatkamalepsy), 1, (0,0,0))), (100, 310))
     # Liczba_Duzych_Psow = myfont.render(str(przedzwierzatkaduzepsy), 1, (0,0,0))
     gameDisplay.blit((myfont.render(str(przedzwierzatkaduzepsy), 1, (0,0,0))), (100, 360))
-    pygame.display.update()
+    # pygame.display.update()
 
 def interfejs(gameDisplay, TEXT_COLOR):
     pygame.draw.rect(gameDisplay, TEXT_COLOR, (20, 45, 150, 350))
     pygame.draw.rect(gameDisplay, TEXT_COLOR, (20, 430, 760, 150))
+    gameDisplay.blit(arrow, (745, 428))
     gameDisplay.blit(rabbit, (30, 50))
     gameDisplay.blit(sheep, (30, 100))
     gameDisplay.blit(pig, (30, 150))
@@ -28,8 +29,10 @@ def interfejs(gameDisplay, TEXT_COLOR):
     gameDisplay.blit(horse, (30, 250))
     gameDisplay.blit(small_dog, (30, 300))
     gameDisplay.blit(big_dog, (30, 350))
-    pygame.display.update()
+    # pygame.display.update()
 
+arrow = pygame.image.load("pic-arrow.png")
+arrow = pygame.transform.scale(arrow, (30, 30))
 rabbit = pygame.image.load("pic-rabbit.png")
 rabbit = pygame.transform.scale(rabbit, (35, 35))
 sheep = pygame.image.load("pic-sheep.png")
