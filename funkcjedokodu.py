@@ -70,7 +70,7 @@ class tryby_gry():
             print("A")
             
 
-    def rundy_gry(self, clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5, gameDisplay, myfont, Wymiana, Koniec_Rundy):
+    def rundy_gry(self, clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5, gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych):
         while True:
             time_delta = clock.tick(60)/1000.0
             mouse = pygame.mouse.get_pos()
@@ -86,7 +86,7 @@ class tryby_gry():
             gameDisplay.blit(background, (0, 0))
             lz.interfejs(gameDisplay, TEXT_COLOR)
             gracz1.rzut_koscmi(gameDisplay, myfont)
-            gracz1.akcjeporzucie(gameDisplay, myfont, manager, time_delta, Wymiana, Koniec_Rundy)
+            gracz1.akcjeporzucie(gameDisplay, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych)
             input()
             # Najpierw rzut kości jednej osoby
             # Potem czy chce coś z tymi zwierzetami zrobić
@@ -111,4 +111,3 @@ small_dog = pygame.image.load("pic-small-dog.png")
 small_dog = pygame.transform.scale(small_dog, (35, 35))
 big_dog = pygame.image.load("pic-big-dog.png")
 big_dog = pygame.transform.scale(big_dog, (35, 35))
-
