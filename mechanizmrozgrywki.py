@@ -239,6 +239,7 @@ class mechanizm_rogzrywki():
         lz.zwierzeta(gameDisplay, myfont, self.pozwierzatkakroliki, self.pozwierzatkaowce, self.pozwierzatkaswinie, self.pozwierzatkakrowy, self.pozwierzatkakonie, self.pozwierzatkampsy, self.pozwierzatkadpsy)
         print("Zwierzęta gracza :", "Króliki:", self.pozwierzatkakroliki, "Owce:", self.pozwierzatkaowce, "Świnie:", self.pozwierzatkaswinie, "Krowy:", self.pozwierzatkakrowy, "Konie:", self.pozwierzatkakonie, "Małe Psy:", self.pozwierzatkampsy, "Duże Psy:", self.pozwierzatkadpsy)
         print("KONIEC RZUTU GRACZA")
+        self.Etap_Cos_Jeszcze = True
         # Kości, którymi gracz będzie rzucać
         # Wynik pierwszy i wynik drugi
         # Wyświetlenie wyników
@@ -258,8 +259,12 @@ class mechanizm_rogzrywki():
         # Runda kończy się ostatecznym podliczeniem zwierząt i aktualizacją tabelki z liczbą zwierząt
         print("AAA")
 
-    def akcjeporzucie(self, gameDisplay, myfont, manager, time_delta, Wymiana, Koniec_Rundy):
-        while True:
+    def akcjeporzucie(self, gameDisplay, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych):
+        pygame_gui.elements.UIButton.show(Wymiana)
+        pygame_gui.elements.UIButton.show(Koniec_Rundy)
+        while self.Etap_Cos_Jeszcze == True:
+            time_delta = clock.tick(60)/1000.0
+            mouse = pygame.mouse.get_pos()
             self.wymzwierzatkakroliki = self.zwierzetagracza.count("Królik")
             self.wymzwierzatkaowce = self.zwierzetagracza.count("Owca")
             self.wymzwierzatkaswinie = self.zwierzetagracza.count("Świnia")
@@ -268,14 +273,23 @@ class mechanizm_rogzrywki():
             self.wymzwierzatkampsy = self.zwierzetagracza.count("Mały Pies")
             self.wymzwierzatkadpsy = self.zwierzetagracza.count("Duży Pies")
             gameDisplay.blit((myfont.render("Czy chcesz zrobić coś jeszcze?", 1, (0,0,0))), (40, 450))
-            pygame_gui.elements.UIButton.show(Wymiana)
-            pygame_gui.elements.UIButton.show(Koniec_Rundy)
+            time_delta = clock.tick(60)/1000.0
+            mouse = pygame.mouse.get_pos()
             # wyborgracza = input()
             for event in pygame.event.get():
+                if event.type==pygame.KEYDOWN:
+                    if event.key==pygame.K_ESCAPE:
+                        exit()
                 if event.type == pygame.USEREVENT:
                     if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                         if event.ui_element == Wymiana:
-                            wymianyopcjejeden = input("Możliwe wymiany: 1 - Kupno cenniejszych zwierząt hodowlanych, 2 - Kupno małego lub dużego psa, 3 - Wymiana zwierząt na mniej cenne")
+                            pygame_gui.elements.UIButton.hide(Wymiana)
+                            pygame_gui.elements.UIButton.hide(Koniec_Rundy)
+                            pygame_gui.elements.UIButton.show(Kupno_Cenniejszych)
+                            pygame_gui.elements.UIButton.show(Kupno_Psow)
+                            pygame_gui.elements.UIButton.show(Kupno_Mniej_Cennych)
+                            pygame.display.update()
+                            wymianyopcjejeden = print("Możliwe wymiany: 1 - Kupno cenniejszych zwierząt hodowlanych, 2 - Kupno małego lub dużego psa, 3 - Wymiana zwierząt na mniej cenne")
                             if wymianyopcjejeden == "1":
                                 cennezwierzatka = input("Jakie zwierzę chcesz zakupić? 1 - Owca, 2 - Świnia, 3 - Krowa, 4 - Koń")
                                 if cennezwierzatka == "1":
@@ -374,20 +388,26 @@ class mechanizm_rogzrywki():
                                         print("Akcja jest niemożliwa do wykonania. Gracz nie posiada konia.")
                                         
 
-                    elif event.ui_element == Koniec_Rundy:
-                        print("KONIEC RUNDY GRACZA")
-                        print("--------------------")
-                        break
-                    self.powymzwierzatkakroliki = self.zwierzetagracza.count("Królik")
-                    self.powymzwierzatkaowce = self.zwierzetagracza.count("Owca")
-                    self.powymzwierzatkaswinie = self.zwierzetagracza.count("Świnia")
-                    self.powymzwierzatkakrowy = self.zwierzetagracza.count("Krowa")
-                    self.powymzwierzatkakonie = self.zwierzetagracza.count("Koń")
-                    self.powymzwierzatkampsy = self.zwierzetagracza.count("Mały Pies")
-                    self.powymzwierzatkadpsy = self.zwierzetagracza.count("Duży Pies")
-                    
-                    print("Zwierzęta gracza:", "Króliki:", self.powymzwierzatkakroliki, "Owce:", self.powymzwierzatkaowce, "Świnie:", self.powymzwierzatkaswinie, "Krowy:", self.powymzwierzatkakrowy, "Konie:", self.powymzwierzatkakonie, "Małe Psy:", self.powymzwierzatkampsy, "Duże Psy:", self.powymzwierzatkadpsy)
+                        elif event.ui_element == Koniec_Rundy:
+                            pygame_gui.elements.UIButton.hide(Wymiana)
+                            pygame_gui.elements.UIButton.hide(Koniec_Rundy)
+                            print("KONIEC RUNDY GRACZA")
+                            print("--------------------")
+                            self.Etap_Cos_Jeszcze = False
+                        self.powymzwierzatkakroliki = self.zwierzetagracza.count("Królik")
+                        self.powymzwierzatkaowce = self.zwierzetagracza.count("Owca")
+                        self.powymzwierzatkaswinie = self.zwierzetagracza.count("Świnia")
+                        self.powymzwierzatkakrowy = self.zwierzetagracza.count("Krowa")
+                        self.powymzwierzatkakonie = self.zwierzetagracza.count("Koń")
+                        self.powymzwierzatkampsy = self.zwierzetagracza.count("Mały Pies")
+                        self.powymzwierzatkadpsy = self.zwierzetagracza.count("Duży Pies")
+                        
+                        print("Zwierzęta gracza:", "Króliki:", self.powymzwierzatkakroliki, "Owce:", self.powymzwierzatkaowce, "Świnie:", self.powymzwierzatkaswinie, "Krowy:", self.powymzwierzatkakrowy, "Konie:", self.powymzwierzatkakonie, "Małe Psy:", self.powymzwierzatkampsy, "Duże Psy:", self.powymzwierzatkadpsy)
+                manager.process_events(event)
             manager.update(time_delta)
             pygame.display.update()
             pygame.display.flip()
             manager.draw_ui(gameDisplay)
+
+            pygame.display.update()
+            clock.tick(10)
