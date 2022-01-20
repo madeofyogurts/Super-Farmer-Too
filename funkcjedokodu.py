@@ -68,9 +68,9 @@ class tryby_gry():
             gameDisplay.blit(Super_Farmer, (325, 200))
         if self.Etap_Runda == True:
             print("A")
-            
 
-    def rundy_gry(self, clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5, gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych):
+
+    def rundy_gry(self, clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5, gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4):
         while True:
             time_delta = clock.tick(60)/1000.0
             mouse = pygame.mouse.get_pos()
@@ -86,15 +86,14 @@ class tryby_gry():
             gameDisplay.blit(background, (0, 0))
             lz.interfejs(gameDisplay, TEXT_COLOR)
             gracz1.rzut_koscmi(gameDisplay, myfont)
-            gracz1.akcjeporzucie(gameDisplay, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych)
-            input()
+            gracz1.akcjeporzucie(gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4)
+            print("EEE")
             # Najpierw rzut kości jednej osoby
             # Potem czy chce coś z tymi zwierzetami zrobić
             # Spawdzenie, czy ta osoba wygrywa
             # Potem rzut kości kolejnej osoby
             # I czy ona chce coś zrobić
             # I czy ta osoba wygrywa
-            print("A")
             manager.update(time_delta)
 
 rabbit = pygame.image.load("pic-rabbit.png")
