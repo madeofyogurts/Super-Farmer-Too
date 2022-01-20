@@ -64,6 +64,12 @@ Wymiana = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(525, 500, 120, 
 pygame_gui.elements.UIButton.hide(Wymiana)
 Koniec_Rundy = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(650, 500, 120, 33), text="Koniec Rundy", manager=manager)
 pygame_gui.elements.UIButton.hide(Koniec_Rundy)
+Kupno_Cenniejszych = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(125, 500, 180, 33), text="Cenniejsze zwierzę", manager=manager)
+pygame_gui.elements.UIButton.hide(Kupno_Cenniejszych)
+Kupno_Psow = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(325, 500, 180, 33), text="Mały/duży pies", manager=manager)
+pygame_gui.elements.UIButton.hide(Kupno_Psow)
+Kupno_Mniej_Cennych = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(525, 500, 180, 33), text="Mniej cenne zwierzę", manager=manager)
+pygame_gui.elements.UIButton.hide(Kupno_Mniej_Cennych)
 
 gracz1 = mr.mechanizm_rogzrywki(gameDisplay)
 gracz2 = mr.mechanizm_rogzrywki(gameDisplay)
@@ -82,6 +88,7 @@ while True:
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == RozpocznijGre:
+                    print("A")
                     t_g.etap_rozpoczecie_gry(RozpocznijGre, ZasadyGry, gameDisplay, Liczba_Graczy, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu)
                 if event.ui_element == ZasadyGry:
                     t_g.etap_zasady_gry(RozpocznijGre, ZasadyGry, PowrotDoMenu)
@@ -110,7 +117,7 @@ while True:
     gameDisplay.blit(background, (0, 0)) # Tworzy zdefiniowane wyżej tło, umieszcza je w prawym górnym rogu
     t_g.wyswietlane_teksty(gameDisplay, Liczba_Graczy, Super_Farmer, TEXT_COLOR)
     if Etap_Runda == True:
-        t_g.rundy_gry(clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5,gameDisplay, myfont, Wymiana, Koniec_Rundy)
+        t_g.rundy_gry(clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5,gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych)
         print("SS")
     manager.draw_ui(gameDisplay)
 
