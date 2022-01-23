@@ -37,7 +37,7 @@ class tryby_gry():
         pygame_gui.elements.UIButton.show(ZasadyGry)
         pygame_gui.elements.UIButton.hide(PowrotDoMenu)
 
-    def gracze_ustaleni(self, gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre):
+    def gracze_ustaleni(self, gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre, myfont):
         print(Graczy_Liczba)
         imiona_graczy = []
         pygame_gui.elements.UIButton.hide(Graczy_Dwoch)
@@ -47,8 +47,7 @@ class tryby_gry():
         gameDisplay.blit(background, (0, 0))
         pygame.display.update()
         for i in range(Graczy_Liczba):
-            print("Podaj imię postaci")
-            gracz_i_imie = ii.wpisz_imie()
+            gracz_i_imie = ii.wpisz_imie(gameDisplay, background, myfont, i)
             imiona_graczy.append(gracz_i_imie)
         print(imiona_graczy)
         self.Etap_Rozgrywka = False
@@ -70,7 +69,7 @@ class tryby_gry():
             print("A")
 
 
-    def rundy_gry(self, clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5, gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4):
+    def rundy_gry(self, clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5, gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g, Graczy_Liczba, Rzut_Koscia, Kolejny_Etap):
         while True:
             time_delta = clock.tick(60)/1000.0
             mouse = pygame.mouse.get_pos()
@@ -85,8 +84,28 @@ class tryby_gry():
             manager.update(time_delta)
             gameDisplay.blit(background, (0, 0))
             lz.interfejs(gameDisplay, TEXT_COLOR)
-            gracz1.rzut_koscmi(gameDisplay, myfont)
-            gracz1.akcjeporzucie(gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4)
+            gracz1.rzut_koscmi(gameDisplay, myfont, clock, manager, background, TEXT_COLOR, Rzut_Koscia, Kolejny_Etap, i_g[0])
+            gracz1.akcjeporzucie(gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g[0])
+            gameDisplay.blit(background, (0, 0))
+            lz.interfejs(gameDisplay, TEXT_COLOR)
+            gracz2.rzut_koscmi(gameDisplay, myfont, clock, manager, background, TEXT_COLOR, Rzut_Koscia, Kolejny_Etap, i_g[1])
+            gracz2.akcjeporzucie(gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g[1])
+            if Graczy_Liczba > 2:
+                gameDisplay.blit(background, (0, 0))
+                lz.interfejs(gameDisplay, TEXT_COLOR)
+                gracz3.rzut_koscmi(gameDisplay, myfont, clock, manager, background, TEXT_COLOR, Rzut_Koscia, Kolejny_Etap, i_g[2])
+                gracz3.akcjeporzucie(gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g[2])
+                if Graczy_Liczba > 3:
+                    gameDisplay.blit(background, (0, 0))
+                    lz.interfejs(gameDisplay, TEXT_COLOR)
+                    gracz4.rzut_koscmi(gameDisplay, myfont, clock, manager, background, TEXT_COLOR, Rzut_Koscia, Kolejny_Etap, i_g[3])
+                    gracz4.akcjeporzucie(gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g[3])
+                    if Graczy_Liczba > 4:
+                        gameDisplay.blit(background, (0, 0))
+                        lz.interfejs(gameDisplay, TEXT_COLOR)
+                        gracz5.rzut_koscmi(gameDisplay, myfont, clock, manager, background, TEXT_COLOR, Rzut_Koscia, Kolejny_Etap, i_g[4])
+                        gracz5.akcjeporzucie(gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g[4])
+
             print("EEE")
             # Najpierw rzut kości jednej osoby
             # Potem czy chce coś z tymi zwierzetami zrobić
@@ -110,3 +129,4 @@ small_dog = pygame.image.load("pic-small-dog.png")
 small_dog = pygame.transform.scale(small_dog, (35, 35))
 big_dog = pygame.image.load("pic-big-dog.png")
 big_dog = pygame.transform.scale(big_dog, (35, 35))
+
