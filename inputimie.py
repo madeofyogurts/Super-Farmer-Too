@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 
-def wpisz_imie():
+def wpisz_imie(gameDisplay, background, myfont, i):
     imie = []
     wybor_imienia = True
     while wybor_imienia == True:
@@ -88,6 +88,8 @@ def wpisz_imie():
                     imie = [''.join(imie)]
                     print(imie)
                     wybor_imienia = False
+        gameDisplay.blit(background, (0, 0))
+        gameDisplay.blit((myfont.render(("Wpisz imię gracza numer " + str(i+1)), 1, (0,0,0))), (200, 200))
+        gameDisplay.blit((myfont.render((str(imie)), 1, (0,0,0))), (200, 300))
+        pygame.display.update()
     return imie
-
-            
