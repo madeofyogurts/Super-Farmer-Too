@@ -60,6 +60,12 @@ Imiona_Graczy = []
 # Etap 4 - Rozpoczęcie Rozgrywki
 Rozpocznij_Gre = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(250, 250, 300, 100), text="Rozpocznij Grę!", manager=manager)
 pygame_gui.elements.UIButton.hide(Rozpocznij_Gre)
+
+Rzut_Koscia = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(425, 235, 300, 100), text="Rzut Kością", manager=manager)
+pygame_gui.elements.UIButton.hide(Rzut_Koscia)
+Kolejny_Etap = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(250, 250, 300, 100), text="Przejdź Dalej", manager=manager)
+pygame_gui.elements.UIButton.hide(Kolejny_Etap)
+
 Wymiana = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(525, 535, 120, 33), text="Wymiana", manager=manager)
 pygame_gui.elements.UIButton.hide(Wymiana)
 Koniec_Rundy = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(650, 535, 120, 33), text="Koniec Rundy", manager=manager)
@@ -116,16 +122,16 @@ while True:
                     t_g.powrot_do_menu(RozpocznijGre, ZasadyGry, PowrotDoMenu)
                 if event.ui_element == Graczy_Dwoch:
                     Graczy_Liczba = 2
-                    i_g = t_g.gracze_ustaleni(gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre)
+                    i_g = t_g.gracze_ustaleni(gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre, myfont)
                 if event.ui_element == Graczy_Trzech:
                     Graczy_Liczba = 3
-                    i_g = t_g.gracze_ustaleni(gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre)
+                    i_g = t_g.gracze_ustaleni(gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre, myfont)
                 if event.ui_element == Graczy_Czterech:
                     Graczy_Liczba = 4
-                    i_g = t_g.gracze_ustaleni(gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre)
+                    i_g = t_g.gracze_ustaleni(gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre, myfont)
                 if event.ui_element == Graczy_Pieciu:
                     Graczy_Liczba = 5
-                    i_g = t_g.gracze_ustaleni(gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre)
+                    i_g = t_g.gracze_ustaleni(gameDisplay, background, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu, Graczy_Liczba, Rozpocznij_Gre, myfont)
                 if event.ui_element == Rozpocznij_Gre:
                     t_g.rozpocznij_runde(Rozpocznij_Gre)
                     Etap_Runda = True
@@ -137,7 +143,7 @@ while True:
     gameDisplay.blit(background, (0, 0)) # Tworzy zdefiniowane wyżej tło, umieszcza je w prawym górnym rogu
     t_g.wyswietlane_teksty(gameDisplay, Liczba_Graczy, Super_Farmer, TEXT_COLOR)
     if Etap_Runda == True:
-        t_g.rundy_gry(clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5,gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4)
+        t_g.rundy_gry(clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5,gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g, Graczy_Liczba, Rzut_Koscia, Kolejny_Etap)
         print("SS")
     manager.draw_ui(gameDisplay)
 
