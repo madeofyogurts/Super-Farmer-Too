@@ -12,13 +12,14 @@ class mechanizm_rogzrywki():
         print("Gracz")
         self.zwierzetagracza = []
 
-    def rzut_koscmi(self, gameDisplay, myfont):
+    def rzut_koscmi(self, gameDisplay, myfont, clock, manager, background, TEXT_COLOR, Rzut_Koscia, Kolejny_Etap, i_g):
         KoscJeden = ["Królik", "Owca", "Królik", "Owca", "Królik", "Świnia", "Królik", "Świnia", "Królik", "Koń", "Królik", "Lis"]
         KoscDwa = ["Królik", "Owca", "Królik", "Owca", "Królik", "Owca", "Królik", "Świnia", "Królik", "Krowa", "Królik", "Wilk"]
         WynikJeden = random.choice(KoscJeden)
         WynikDwa = random.choice(KoscDwa)
 
         print("\nRzut kośćmi gracza :", WynikJeden, "i", WynikDwa)
+
         #Proces dodawania zwierzątek z inwentarza
         #Najpierw zwierzątka są podliczane do inwentarza gracza
         self.zwierzetagracza.append(WynikJeden)
@@ -239,6 +240,46 @@ class mechanizm_rogzrywki():
         self.pozwierzatkadpsy = self.zwierzetagracza.count("Duży Pies")
         lz.zwierzeta(gameDisplay, myfont, self.pozwierzatkakroliki, self.pozwierzatkaowce, self.pozwierzatkaswinie, self.pozwierzatkakrowy, self.pozwierzatkakonie, self.pozwierzatkampsy, self.pozwierzatkadpsy)
         print("Zwierzęta gracza :", "Króliki:", self.pozwierzatkakroliki, "Owce:", self.pozwierzatkaowce, "Świnie:", self.pozwierzatkaswinie, "Krowy:", self.pozwierzatkakrowy, "Konie:", self.pozwierzatkakonie, "Małe Psy:", self.pozwierzatkampsy, "Duże Psy:", self.pozwierzatkadpsy)
+        
+        pygame_gui.elements.UIButton.show(Rzut_Koscia) # Przycisk się nie pojawia
+        manager.draw_ui(gameDisplay)
+        pygame.display.update()
+        pygame.display.flip()
+        Wynik_Gracza = False
+        self.Etap_Rzut_Koscia = True
+        while self.Etap_Rzut_Koscia == True:
+            time_delta = clock.tick(60)/1000.0
+            mouse = pygame.mouse.get_pos()
+            # gameDisplay.blit(background, (0, 0))
+            lz.interfejs(gameDisplay, TEXT_COLOR)
+            lz.zwierzeta(gameDisplay, myfont, self.pozwierzatkakroliki, self.pozwierzatkaowce, self.pozwierzatkaswinie, self.pozwierzatkakrowy, self.pozwierzatkakonie, self.pozwierzatkampsy, self.pozwierzatkadpsy)
+            pygame.display.update()
+            if Wynik_Gracza == True:
+                gameDisplay.blit((myfont.render(("Rzut kośćmi gracza " + str(i_g)), 1, (0,0,0))), (40, 450))
+                lz.Grafika_Kosci_Jeden(WynikJeden, gameDisplay)
+                lz.Grafika_Kosci_Dwa(WynikDwa, gameDisplay)
+            for event in pygame.event.get():
+                if event.type==pygame.KEYDOWN:
+                    if event.key==pygame.K_ESCAPE:
+                        exit()
+                if event.type == pygame.USEREVENT:
+                    if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                        if event.ui_element == Rzut_Koscia:
+                            Wynik_Gracza = True
+                            pygame_gui.elements.UIButton.hide(Rzut_Koscia)
+                            pygame_gui.elements.UIButton.show(Kolejny_Etap)
+                            pygame.display.update()
+                        if event.ui_element == Kolejny_Etap:
+                            pygame_gui.elements.UIButton.hide(Kolejny_Etap)
+                            pygame.display.update()
+                            Wynik_Gracza = False
+                            self.Etap_Rzut_Koscia = False
+
+                manager.process_events(event)
+            manager.update(time_delta)
+
+            manager.draw_ui(gameDisplay)
+
         print("KONIEC RZUTU GRACZA")
         self.Etap_Cos_Jeszcze = True
         # Kości, którymi gracz będzie rzucać
@@ -260,7 +301,7 @@ class mechanizm_rogzrywki():
         # Runda kończy się ostatecznym podliczeniem zwierząt i aktualizacją tabelki z liczbą zwierząt
         print("AAA")
 
-    def akcjeporzucie(self, gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4):
+    def akcjeporzucie(self, gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g):
         pygame_gui.elements.UIButton.show(Wymiana)
         pygame_gui.elements.UIButton.show(Koniec_Rundy)
         Pytanie_Boolean = True
@@ -285,6 +326,7 @@ class mechanizm_rogzrywki():
             lz.zwierzeta(gameDisplay, myfont, self.wymzwierzatkakroliki, self.wymzwierzatkaowce, self.wymzwierzatkaswinie, self.wymzwierzatkakrowy, self.wymzwierzatkakonie, self.wymzwierzatkampsy, self.wymzwierzatkadpsy)
             if Pytanie_Boolean == True:
                 gameDisplay.blit((myfont.render("Czy chcesz zrobić coś jeszcze?", 1, (0,0,0))), (40, 450))
+                gameDisplay.blit((myfont.render(("Gracz " + str(i_g)), 1, (0,0,0))), (500, 50))
             if Wymiana_Boolean == True:
                 gameDisplay.blit((myfont.render("1 - Wymiana mniej cennych zwierząt na zwierzeta cenniejsze", 1, (0,0,0))), (40, 450))
                 gameDisplay.blit((myfont.render("2 - Wymiana na małego/dużego psa", 1, (0,0,0))), (40, 480))
