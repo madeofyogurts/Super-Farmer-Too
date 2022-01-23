@@ -21,7 +21,6 @@ def zwierzeta(gameDisplay, myfont, przedzwierzatkakroliki, przedzwierzatkaowce, 
 def interfejs(gameDisplay, TEXT_COLOR):
     pygame.draw.rect(gameDisplay, TEXT_COLOR, (20, 45, 150, 350))
     pygame.draw.rect(gameDisplay, TEXT_COLOR, (20, 430, 760, 150))
-    gameDisplay.blit(arrow, (745, 428))
     gameDisplay.blit(rabbit, (30, 50))
     gameDisplay.blit(sheep, (30, 100))
     gameDisplay.blit(pig, (30, 150))
@@ -31,8 +30,32 @@ def interfejs(gameDisplay, TEXT_COLOR):
     gameDisplay.blit(big_dog, (30, 350))
     # pygame.display.update()
 
-arrow = pygame.image.load("pic-arrow.png")
-arrow = pygame.transform.scale(arrow, (30, 30))
+def Grafika_Kosci_Jeden(WynikJeden, gameDisplay):
+    if WynikJeden == "Królik":
+        gameDisplay.blit(rabbit, (200, 300))
+    elif WynikJeden == "Owca":
+        gameDisplay.blit(sheep, (200, 300))
+    elif WynikJeden == "Świnia":
+        gameDisplay.blit(pig, (200, 300))
+    elif WynikJeden == "Koń":
+        gameDisplay.blit(horse, (200, 300))
+    elif WynikJeden == "Lis":
+        gameDisplay.blit(fox, (200, 300))
+
+
+def Grafika_Kosci_Dwa(WynikDwa, gameDisplay):
+    # "Krowa", "Królik", "Wilk"
+    if WynikDwa == "Królik":
+        gameDisplay.blit(rabbit, (200, 350))
+    elif WynikDwa == "Owca":
+        gameDisplay.blit(sheep, (200, 350))
+    elif WynikDwa == "Świnia":
+        gameDisplay.blit(pig, (200, 350))
+    elif WynikDwa == "Krowa":
+        gameDisplay.blit(cow, (200, 350))
+    elif WynikDwa == "Wilk":
+        gameDisplay.blit(wolf, (200, 350))
+
 rabbit = pygame.image.load("pic-rabbit.png")
 rabbit = pygame.transform.scale(rabbit, (35, 35))
 sheep = pygame.image.load("pic-sheep.png")
@@ -47,3 +70,7 @@ small_dog = pygame.image.load("pic-small-dog.png")
 small_dog = pygame.transform.scale(small_dog, (35, 35))
 big_dog = pygame.image.load("pic-big-dog.png")
 big_dog = pygame.transform.scale(big_dog, (35, 35))
+fox = pygame.image.load("pic-fox.png")
+fox = pygame.transform.scale(fox, (35, 35))
+wolf = pygame.image.load("pic-wolf.png")
+wolf = pygame.transform.scale(wolf, (35, 35))
