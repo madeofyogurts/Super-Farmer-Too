@@ -25,6 +25,7 @@ GREEN_BACKGROUND = (156, 204, 101) # Tło - #9CCC65
 BUTTON = (29, 32, 31) # Przyciski - nieużywane, jak zakodować inny kolor przycisku?
 TEXT_COLOR = (241, 191, 152) # Jak zakodować inny kolor tekstu?
 myfont = pygame.font.SysFont("monospace", 20)
+myfontsmall = pygame.font.SysFont("monospace", 15)
 
 # Etapy gry - te tutaj w sumie nie są teraz potrzebne, można rozważyć ich usunięcie
 Etap_Poczatek = True
@@ -42,7 +43,7 @@ RozpocznijGre = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(250, 250,
 ZasadyGry = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(250, 400, 300, 100), text="Zasady Gry", manager=manager)
 
 # Etap 2 - Zasady Gry
-PowrotDoMenu = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(50, 400, 300, 100), text="Powrót", manager=manager)
+PowrotDoMenu = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(50, 470, 300, 100), text="Powrót", manager=manager)
 pygame_gui.elements.UIButton.hide(PowrotDoMenu)
 
 # Etap 3 - Definiowanie Graczy
@@ -118,7 +119,9 @@ while True:
                     t_g.etap_rozpoczecie_gry(RozpocznijGre, ZasadyGry, gameDisplay, Liczba_Graczy, Graczy_Dwoch, Graczy_Trzech, Graczy_Czterech, Graczy_Pieciu)
                 if event.ui_element == ZasadyGry:
                     t_g.etap_zasady_gry(RozpocznijGre, ZasadyGry, PowrotDoMenu)
+                    Etap_Zasady = True
                 if event.ui_element == PowrotDoMenu:
+                    Etap_Zasady = False
                     t_g.powrot_do_menu(RozpocznijGre, ZasadyGry, PowrotDoMenu)
                 if event.ui_element == Graczy_Dwoch:
                     Graczy_Liczba = 2
@@ -145,6 +148,8 @@ while True:
     if Etap_Runda == True:
         t_g.rundy_gry(clock, manager, background, TEXT_COLOR, gracz1, gracz2, gracz3, gracz4, gracz5,gameDisplay, myfont, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g, Graczy_Liczba, Rzut_Koscia, Kolejny_Etap)
         print("SS")
+    if Etap_Zasady == True:
+        t_g.lista_zasad(gameDisplay, myfontsmall, background)
     manager.draw_ui(gameDisplay)
 
     pygame.display.update()
