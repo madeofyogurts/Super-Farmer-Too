@@ -93,3 +93,5 @@ def wpisz_imie(gameDisplay, background, myfont, i):
         gameDisplay.blit((myfont.render((str(imie)), 1, (0,0,0))), (200, 300))
         pygame.display.update()
     return imie
+
+            
