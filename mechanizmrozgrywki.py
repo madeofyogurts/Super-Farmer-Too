@@ -250,12 +250,10 @@ class mechanizm_rogzrywki():
         while self.Etap_Rzut_Koscia == True:
             time_delta = clock.tick(60)/1000.0
             mouse = pygame.mouse.get_pos()
-            # gameDisplay.blit(background, (0, 0))
+            gameDisplay.blit(background, (0, 0))
             lz.interfejs(gameDisplay, TEXT_COLOR)
             lz.zwierzeta(gameDisplay, myfont, self.pozwierzatkakroliki, self.pozwierzatkaowce, self.pozwierzatkaswinie, self.pozwierzatkakrowy, self.pozwierzatkakonie, self.pozwierzatkampsy, self.pozwierzatkadpsy)
-            pygame.display.update()
             if Wynik_Gracza == True:
-                gameDisplay.blit((myfont.render(("Rzut kośćmi gracza " + str(i_g)), 1, (0,0,0))), (40, 450))
                 lz.Grafika_Kosci_Jeden(WynikJeden, gameDisplay)
                 lz.Grafika_Kosci_Dwa(WynikDwa, gameDisplay)
             for event in pygame.event.get():
@@ -269,6 +267,7 @@ class mechanizm_rogzrywki():
                             pygame_gui.elements.UIButton.hide(Rzut_Koscia)
                             pygame_gui.elements.UIButton.show(Kolejny_Etap)
                             pygame.display.update()
+                            pygame.display.flip()
                         if event.ui_element == Kolejny_Etap:
                             pygame_gui.elements.UIButton.hide(Kolejny_Etap)
                             pygame.display.update()
@@ -276,9 +275,13 @@ class mechanizm_rogzrywki():
                             self.Etap_Rzut_Koscia = False
 
                 manager.process_events(event)
+            gameDisplay.blit((myfont.render(("Rzut kośćmi gracza " + str(i_g)), 1, (0,0,0))), (40, 450))
             manager.update(time_delta)
-
             manager.draw_ui(gameDisplay)
+            pygame.display.update()
+            pygame.display.flip()
+
+            
 
         print("KONIEC RZUTU GRACZA")
         self.Etap_Cos_Jeszcze = True
@@ -301,7 +304,8 @@ class mechanizm_rogzrywki():
         # Runda kończy się ostatecznym podliczeniem zwierząt i aktualizacją tabelki z liczbą zwierząt
         print("AAA")
 
-    def akcjeporzucie(self, gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g):
+    def akcjeporzucie(self, gameDisplay, TEXT_COLOR, myfont, manager, time_delta, clock, Wymiana, Koniec_Rundy, Kupno_Cenniejszych, Kupno_Psow, Kupno_Mniej_Cennych, KC_1, KC_2, KC_3, KC_4, KP_1, KP_2, KMC_1, KMC_2, KMC_3, KMC_4, i_g, background):
+        gameDisplay.blit(background, (0, 0))
         pygame_gui.elements.UIButton.show(Wymiana)
         pygame_gui.elements.UIButton.show(Koniec_Rundy)
         Pytanie_Boolean = True
@@ -327,23 +331,32 @@ class mechanizm_rogzrywki():
             if Pytanie_Boolean == True:
                 gameDisplay.blit((myfont.render("Czy chcesz zrobić coś jeszcze?", 1, (0,0,0))), (40, 450))
                 gameDisplay.blit((myfont.render(("Gracz " + str(i_g)), 1, (0,0,0))), (500, 50))
+                lz.Tablica_Wymian(gameDisplay, myfont)
             if Wymiana_Boolean == True:
+                gameDisplay.blit((myfont.render(("Gracz " + str(i_g)), 1, (0,0,0))), (500, 50))
                 gameDisplay.blit((myfont.render("1 - Wymiana mniej cennych zwierząt na zwierzeta cenniejsze", 1, (0,0,0))), (40, 450))
                 gameDisplay.blit((myfont.render("2 - Wymiana na małego/dużego psa", 1, (0,0,0))), (40, 480))
                 gameDisplay.blit((myfont.render("3 - Wymiana cenniejszych zwierząt na mniej cenne", 1, (0,0,0))), (40, 510))
+                lz.Tablica_Wymian(gameDisplay, myfont)
             if Cenniejsze_Boolean == True:
+                gameDisplay.blit((myfont.render(("Gracz " + str(i_g)), 1, (0,0,0))), (500, 50))
                 gameDisplay.blit((myfont.render("1 - Owca", 1, (0,0,0))), (40, 450))
                 gameDisplay.blit((myfont.render("2 - Świnia", 1, (0,0,0))), (40, 470))
                 gameDisplay.blit((myfont.render("3 - Krowa", 1, (0,0,0))), (40, 490))
                 gameDisplay.blit((myfont.render("4 - Koń", 1, (0,0,0))), (40, 510))
+                lz.Tablica_Wymian(gameDisplay, myfont)
             if Pies_Boolean == True:
+                gameDisplay.blit((myfont.render(("Gracz " + str(i_g)), 1, (0,0,0))), (500, 50))
                 gameDisplay.blit((myfont.render("1 - Mały pies", 1, (0,0,0))), (40, 450))
                 gameDisplay.blit((myfont.render("2 - Duzy pies", 1, (0,0,0))), (40, 480))
+                lz.Tablica_Wymian(gameDisplay, myfont)
             if Mniej_Cenne_Boolean == True:
+                gameDisplay.blit((myfont.render(("Gracz " + str(i_g)), 1, (0,0,0))), (500, 50))
                 gameDisplay.blit((myfont.render("1 - Królik", 1, (0,0,0))), (40, 450))
                 gameDisplay.blit((myfont.render("2 - Owca", 1, (0,0,0))), (40, 470))
                 gameDisplay.blit((myfont.render("3 - Świnia", 1, (0,0,0))), (40, 490))
                 gameDisplay.blit((myfont.render("4 - Krowa", 1, (0,0,0))), (40, 510))
+                lz.Tablica_Wymian(gameDisplay, myfont)
             if Koniec_Wymiany_KC == True:
                 pygame_gui.elements.UIButton.hide(KC_1)
                 pygame_gui.elements.UIButton.hide(KC_2)
@@ -619,21 +632,26 @@ class mechanizm_rogzrywki():
             pygame.display.update()
             clock.tick(10)
 
-# Dopasować pod Pygame'a
-    # def wygrana_czy_nie(self):
-    #     self.wygzwierzatkakroliki = self.zwierzetagracza.count("Królik")
-    #     self.wygzwierzatkaowce = self.zwierzetagracza.count("Owca")
-    #     self.wygzwierzatkaswinie = self.zwierzetagracza.count("Świnia")
-    #     self.wygzwierzatkakrowy = self.zwierzetagracza.count("Krowa")
-    #     self.wygzwierzatkakonie = self.zwierzetagracza.count("Koń")
-    #     if self.wygzwierzatkakroliki > 0:
-    #         if self.wygzwierzatkaowce > 0:
-    #             if self.wygzwierzatkaswinie > 0:
-    #                 if self.wygzwierzatkakrowy > 0:
-    #                     if self.wygzwierzatkakonie > 0:
-    #                         print("BRAWO! GRACZ", self.imie, "WYGRAŁ GRĘ!")
-    #                         end = input("Wpisz Q, aby zamknąć okienko")
-    #                         if end == "Q":
-    #                             quit()
+    def wygrana_czy_nie(self, gameDisplay, TEXT_COLOR, myfont, manager, time_delta, i_g):
+        self.wygzwierzatkakroliki = self.zwierzetagracza.count("Królik")
+        self.wygzwierzatkaowce = self.zwierzetagracza.count("Owca")
+        self.wygzwierzatkaswinie = self.zwierzetagracza.count("Świnia")
+        self.wygzwierzatkakrowy = self.zwierzetagracza.count("Krowa")
+        self.wygzwierzatkakonie = self.zwierzetagracza.count("Koń")
+        self.wygzwierzatkampsy = self.zwierzetagracza.count("Małe Psy")
+        self.wygzwierzatkadpsy = self.zwierzetagracza.count("Duże Psy")
+        if self.wygzwierzatkakroliki > 0:
+            if self.wygzwierzatkaowce > 0:
+                if self.wygzwierzatkaswinie > 0:
+                    if self.wygzwierzatkakrowy > 0:
+                        if self.wygzwierzatkakonie > 0:
+                            while True:
+                                lz.interfejs(gameDisplay, TEXT_COLOR)
+                                lz.zwierzeta(gameDisplay, myfont, self.wygzwierzatkakroliki, self.wygzwierzatkaowce, self.wygzwierzatkaswinie, self.wygzwierzatkakrowy, self.wygzwierzatkakonie, self.wygzwierzatkampsy, self.wygzwierzatkadpsy)
+                                gameDisplay.blit((myfont.render("Gratlacje! Wygrywa gracz " + str(i_g), 1, (0,0,0))), (40, 450))
+                                manager.update(time_delta)
+                                pygame.display.update()
+                                pygame.display.flip()
+                                manager.draw_ui(gameDisplay)
+                                
 
-# Dodać ostatnią funkcję - czy gracz wygrał
