@@ -32,29 +32,61 @@ def interfejs(gameDisplay, TEXT_COLOR):
 
 def Grafika_Kosci_Jeden(WynikJeden, gameDisplay):
     if WynikJeden == "Królik":
-        gameDisplay.blit(rabbit, (200, 300))
+        gameDisplay.blit(rabbit, (200, 500))
     elif WynikJeden == "Owca":
-        gameDisplay.blit(sheep, (200, 300))
+        gameDisplay.blit(sheep, (200, 500))
     elif WynikJeden == "Świnia":
-        gameDisplay.blit(pig, (200, 300))
+        gameDisplay.blit(pig, (200, 500))
     elif WynikJeden == "Koń":
-        gameDisplay.blit(horse, (200, 300))
+        gameDisplay.blit(horse, (200, 500))
     elif WynikJeden == "Lis":
-        gameDisplay.blit(fox, (200, 300))
+        gameDisplay.blit(fox, (200, 500))
 
 
 def Grafika_Kosci_Dwa(WynikDwa, gameDisplay):
     # "Krowa", "Królik", "Wilk"
     if WynikDwa == "Królik":
-        gameDisplay.blit(rabbit, (200, 350))
+        gameDisplay.blit(rabbit, (250, 500))
     elif WynikDwa == "Owca":
-        gameDisplay.blit(sheep, (200, 350))
+        gameDisplay.blit(sheep, (250, 500))
     elif WynikDwa == "Świnia":
-        gameDisplay.blit(pig, (200, 350))
+        gameDisplay.blit(pig, (250, 500))
     elif WynikDwa == "Krowa":
-        gameDisplay.blit(cow, (200, 350))
+        gameDisplay.blit(cow, (250, 500))
     elif WynikDwa == "Wilk":
-        gameDisplay.blit(wolf, (200, 350))
+        gameDisplay.blit(wolf, (250, 500))
+
+def Tablica_Wymian(gameDisplay, myfont):
+    gameDisplay.blit((myfont.render("6", 1, (0,0,0))), (280, 110))
+    gameDisplay.blit(rabbit, (300, 100))
+    gameDisplay.blit((myfont.render("=", 1, (0,0,0))), (380, 110))
+    gameDisplay.blit((myfont.render("1", 1, (0,0,0))), (430, 110))
+    gameDisplay.blit(sheep, (450, 100))
+    gameDisplay.blit((myfont.render("3", 1, (0,0,0))), (280, 160))
+    gameDisplay.blit(sheep, (300, 150))
+    gameDisplay.blit((myfont.render("=", 1, (0,0,0))), (380, 160))
+    gameDisplay.blit((myfont.render("1", 1, (0,0,0))), (430, 160))
+    gameDisplay.blit(pig, (450, 150))
+    gameDisplay.blit((myfont.render("2", 1, (0,0,0))), (280, 210))
+    gameDisplay.blit(pig, (300, 200))
+    gameDisplay.blit((myfont.render("=", 1, (0,0,0))), (380, 210))
+    gameDisplay.blit((myfont.render("1", 1, (0,0,0))), (430, 210))
+    gameDisplay.blit(cow, (450, 200))
+    gameDisplay.blit((myfont.render("2", 1, (0,0,0))), (280, 260))
+    gameDisplay.blit(cow, (300, 250))
+    gameDisplay.blit((myfont.render("=", 1, (0,0,0))), (380, 260))
+    gameDisplay.blit((myfont.render("1", 1, (0,0,0))), (430, 260))
+    gameDisplay.blit(horse, (450, 250))
+    gameDisplay.blit((myfont.render("1", 1, (0,0,0))), (280, 310))
+    gameDisplay.blit(sheep, (300, 300))
+    gameDisplay.blit((myfont.render("=", 1, (0,0,0))), (380, 310))
+    gameDisplay.blit((myfont.render("1", 1, (0,0,0))), (430, 310))
+    gameDisplay.blit(small_dog, (450, 300))
+    gameDisplay.blit((myfont.render("1", 1, (0,0,0))), (280, 360))
+    gameDisplay.blit(cow, (300, 350))
+    gameDisplay.blit((myfont.render("=", 1, (0,0,0))), (380, 360))
+    gameDisplay.blit((myfont.render("1", 1, (0,0,0))), (430, 360))
+    gameDisplay.blit(big_dog, (450, 350))
 
 rabbit = pygame.image.load("pic-rabbit.png")
 rabbit = pygame.transform.scale(rabbit, (35, 35))
